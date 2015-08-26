@@ -1,0 +1,48 @@
+<div ng-controller="ShowController">
+  <super-navbar>
+    <super-navbar-title>
+      Show
+    </super-navbar-title>
+  </super-navbar>
+
+  <div class="padding">
+    <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+    <div ng-hide="showSpinner">
+      <h2 ng-bind="movie['categories']"></h2>
+      
+      
+      
+       <p>stars: <span ng-bind="movie['stars']"></span></p> 
+      
+       <p>name: <span ng-bind="movie['name']"></span></p> 
+      
+       <p>year_release: <span ng-bind="movie['year_release']"></span></p> 
+      
+       <p>rated: <span ng-bind="movie['rated']"></span></p> 
+      
+       <p>runtime: <span ng-bind="movie['runtime']"></span></p> 
+      
+       <p>location: <span ng-bind="movie['location']"></span></p> 
+      
+       <p>file_name: <span ng-bind="movie['file_name']"></span></p> 
+      
+       <p>file_size: <span ng-bind="movie['file_size']"></span></p> 
+      
+       <p>remarks: <span ng-bind="movie['remarks']"></span></p> 
+      
+       <p>rate: <span ng-bind="movie['rate']"></span></p> 
+      
+
+
+      <super-modal-show location="movie#edit?id={{ movie.id }}">
+        <button class="button button-block button-positive">
+          Edit
+        </button>
+      </super-modal-show>
+
+      <button ng-click="remove(movie.id)" class="button button-block button-negative">
+        Remove
+      </button>
+    </div>
+  </div>
+</div>

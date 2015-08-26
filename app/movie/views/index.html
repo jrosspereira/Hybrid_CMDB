@@ -1,0 +1,31 @@
+<div ng-controller="IndexController">
+  <super-navbar>
+    <super-navbar-title>
+      Movie Index
+    </super-navbar-title>
+  </super-navbar>
+
+  <div ng-show="showSpinner" ng-include="'_spinner.html'"></div>
+  <div ng-hide="showSpinner">
+    <ul class="list" ng-hide="movies.length == 0">
+
+      <super-navigate location="movie#show" data-params-id="{{ movie.id }}" ng-repeat="movie in movies">
+        <li class="item item-icon-right">
+          <span ng-bind="movie['categories']"></span>
+          <i class="icon super-ios-arrow-right"></i>
+        </li>
+      </super-navigate>
+
+    </ul>
+
+    <h4 ng-show="movies.length == 0" class="assertive padding">
+      No movies found. Create one?
+    </h4>
+
+    <super-modal-show location="movie#new">
+      <button class="button button-full button-positive">
+        Create a new movie
+      </button>
+    </super-modal-show>
+  </div>
+</div>

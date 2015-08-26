@@ -1,0 +1,113 @@
+#%RAML 0.8
+title: Steroids Data
+mediaType: application/json
+baseUri: https://rest-api.appgyver.com/v1/
+
+traits:
+    - securedBySteroidsApiKey:
+        headers:
+          steroidsApiKey:
+            type: string
+            example: exampleapikey
+            default: 0f19525dfda9b310574b3cef11283d2b8af358da99edb421f5401c6a0978d47a
+          steroidsAppId:
+            type: integer
+            example: 1234
+            default: 75317
+  
+schemas:
+  - movie_collection: '{"$schema":"http://json-schema.org/schema","title":"movie collection","type":"object","properties":{"objects":{"type":"array","items":{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical movie representation","properties":{"categories":{"type":"string"},"stars":{"type":"string"},"name":{"type":"string"},"year_release":{"type":"integer"},"rated":{"type":"string"},"runtime":{"type":"string"},"location":{"type":"string"},"file_name":{"type":"string"},"file_size":{"type":"string"},"remarks":{"type":"string"},"rate":{"type":"string"}},"required":[]}}}}'
+  - movie_member: '{"$schema":"http://json-schema.org/schema","type":"object","description":"The canonical movie representation","properties":{"object":{"type":"object","properties":{"categories":{"type":"string"},"stars":{"type":"string"},"name":{"type":"string"},"year_release":{"type":"integer"},"rated":{"type":"string"},"runtime":{"type":"string"},"location":{"type":"string"},"file_name":{"type":"string"},"file_size":{"type":"string"},"remarks":{"type":"string"},"rate":{"type":"string"}},"required":[]}}}'
+
+resourceTypes:
+  - dolan_db_collection:
+      usage: This resourceType should be used for any collection of items
+      is: [ securedBySteroidsApiKey ]
+      get:
+        description: |
+          {
+            "action": "collection"
+          }
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "objects"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_collection # e.g cars
+      post:
+        description: |
+          {
+            "action": "create",
+            "rootKey": "object"
+          }
+        body:
+          application/json:
+            schema: <<resourcePathName>>_member
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member # e.g. car
+
+  - dolan_db_member:
+      usage: This resourceType should be used for any built.io item
+      is: [ securedBySteroidsApiKey ]
+      get:
+        description: |
+          {
+            "action": "find"
+          }
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member # e.g. car
+      put:
+        description: |
+          {
+            "action": "update",
+            "rootKey": "object"
+          }
+        body:
+          application/json:
+            schema: <<resourcePathName>>_member
+        responses:
+          200:
+            description: |
+              {
+                "rootKey": "object"
+              }
+            body:
+              application/json:
+                schema: <<resourcePathName>>_member
+      delete:
+        description: |
+          {
+            "action": "destroy"
+          }
+        responses:
+          200:
+
+
+/movie:
+  description: |
+    {
+      "resourceName": "movie",
+      "identifierKey": "id"
+    }
+  type: dolan_db_collection
+  /{id}:
+    type: dolan_db_member
+
+

@@ -1,0 +1,12 @@
+.movie-list .item{
+    float: left;
+    width: 50%;
+}
+
+.movie-list {
+    text-align: center;
+}
+
+.movie-list .item img{
+    width: 54%;
+}

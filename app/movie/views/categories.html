@@ -1,0 +1,19 @@
+<div ng-controller="CategoryController">
+    <super-navbar>
+        <super-navbar-title ng-bind="title">
+
+        </super-navbar-title>
+    </super-navbar>
+
+    <div class="movie-list" ng-repeat="c in categoryList">
+
+        <div class="item" href="#">
+            <img src="/images/{{c.image}}">
+            <br />
+            <strong>{{c.name}}</strong>
+        </div>
+
+    </div>
+</div>
+
+
